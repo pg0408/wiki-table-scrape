@@ -3,18 +3,28 @@
 import csv
 import os
 import platform
+import wikipedia
 
 from bs4 import BeautifulSoup
 import requests
 
-def scrape(url, output_name):
+def scrape(searchTerm, output_name):
     """Create CSVs from all tables in a Wikipedia article.
 
     ARGS:
-        url (str): The full URL of the Wikipedia article to scrape tables from.
+        searchTerm (str): Either a Wikipedia URL, or a search term passed to wikipedia.page().
         output_name (str): The base file name (without filepath) to write to.
     """
-
+    #tests if searchTerm is a Wikipedia URL or not
+    if "wikipedia.org/wiki" in searchTerm:
+        url = searchTerm
+    else:
+        try:
+            url = wikipedia.page(searchTerm).url
+        except:
+            print("ERROR: couldn't find matching wikipedia page. If you entered a URL, please check it is spelled correctly.")
+            return
+        
     # Read tables from Wikipedia article into list of HTML strings
     resp = requests.get(url)
     soup = BeautifulSoup(resp.content, 'lxml')
