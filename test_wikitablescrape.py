@@ -31,9 +31,14 @@ wikitablescrape.scrape(
     output_name="films"
 )
 
+# And one more test, with wikipedia module functionality:
+
+wikitablescrape.scrape("English football champions","champions")
+
 # Move all CSV folders into a single 'output' folder
 os.makedirs('output')
 shutil.move('./mountains', './output')
 shutil.move('./volcanoes', './output')
 shutil.move('./nba', './output')
 shutil.move('./films', './output')
+shutil.move('./champions', './output')
